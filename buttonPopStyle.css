@@ -1,0 +1,33 @@
+
+#mainPanel{
+	
+}
+
+
+
+.limeBorder{
+	/*Great for testing!*/
+	border: 1px solid lime;
+}
+
+
+
+/****NO DEFAULT STYLES AFTER THIS COMMENT!
+	MEDIA QUERIES IN SIZE ORDER ONLY
+		I'm using "mobile first design" principles (even if not always developing the mobile look first).
+		
+		Common breakpoints according to https://www.freecodecamp.org/news/css-media-queries-breakpoints-media-types-standard-resolutions-and-more/
+		320px—480px: Mobile devices
+		481px—768px: iPads, Tablets
+		769px—1024px: Small screens, laptops  - 769px still seems tiny to me
+		1025px—1200px: Desktops, large screens
+		1201px and more— Extra large screens, TV
+****/
+@media only screen and (min-width: 290px) {
+/*Tiny width - It's very rare for modern devices to be narrower than this - Galaxy Fold is 280px when folded, Galaxy Siii is 360px, iPhone 4 was 320px, iPhone X is 375*/
+	/*{
+		border: 2px solid lime;
+	}*/
+}
+@media only screen and (min-width: 400px) {
+}
