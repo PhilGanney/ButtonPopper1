@@ -23,11 +23,11 @@
 }
 #mainPanel button.orange{
 	background-color: orange;
-	color: white;
+	color: black;
 }
 #mainPanel button.yellow{
 	background-color: yellow;
-	color: white;
+	color: black;
 }
 #mainPanel button.green{
 	background-color: green;
@@ -43,15 +43,15 @@
 }
 #mainPanel button.violet{
 	background-color: violet;
-	color: white;
+	color: black;
 }
 #mainPanel button.gold{
 	background-color: gold;
-	color: white;
+	color: black;
 }
 #mainPanel button.silver{
 	background-color: silver;
-	color: white;
+	color: black;
 }
 
 
