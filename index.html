@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- Hello, and welcome to the source html of a silly little game about popping buttons-->
+		<!-- Hello, and welcome to the source html of a silly little game about "popping" buttons-->
 		<meta charset="utf-8">
 		<!-- this next tag appears in search engine results as the pages title, is shown in the browser tab on most browsers (or as the title bar in browsers without tabs) and is usually what browsers list the page as in history and bookmarks. Generally you always want to have a title tag. For games it makes sense to match up with the game name, or maybe sometimes have it say the level or area name. Can't type that tag name even in a comment, as if a link to this page is shared on whattsapp it will take the rest of this comment as the sharing description!! -->
 		<title>Button Popper 1</title>
@@ -15,7 +15,15 @@
 	<body>
 		<!-- blank div template
 		<div id="" class=""></div>
+		
+		button that says "Text" template
+		<button type="button" id="" class="">Text</button>
 		-->
-		<div id="mainPanel" class="limeBorder"></div>
+		<div id="scores" class=""><div id="curScore" class=""></div><div id="hiScore" class=""></div></div>
+		<div id="mainPanel" class="limeBorder">
+			<div id="highRow" class="red"><button type="button" id="btn1" class="">Text</button><button type="button" id="btn2" class="">Text</button><button type="button" id="btn3" class="">Text</button></div>
+			<div id="midRow" class="blue"><button type="button" id="btn4" class="">Text</button><button type="button" id="btn5" class="">Text</button><button type="button" id="btn6" class="">Text</button></div>
+			<div id="lowRow" class=""><button type="button" id="btn7" class="">Text</button><button type="button" id="btn8" class="">Text</button><button type="button" id="btn9" class="">Text</button></div>
+		</div>
 	</body>
 </html>
