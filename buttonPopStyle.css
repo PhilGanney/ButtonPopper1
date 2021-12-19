@@ -14,13 +14,43 @@
 #mainPanel button{
 	width: 100px;
 	height: 100px;
+	font-size: 16pt;
+}
+
+#mainPanel button.red{
+	background-color: red;
+	color: white;
+}
+#mainPanel button.orange{
+	background-color: orange;
+	color: white;
+}
+#mainPanel button.yellow{
+	background-color: yellow;
+	color: white;
+}
+#mainPanel button.green{
+	background-color: green;
+	color: white;
 }
 #mainPanel button.blue{
 	background-color: blue;
 	color: white;
 }
-#mainPanel button.red{
-	background-color: red;
+#mainPanel button.indigo{
+	background-color: indigo;
+	color: white;
+}
+#mainPanel button.violet{
+	background-color: violet;
+	color: white;
+}
+#mainPanel button.gold{
+	background-color: gold;
+	color: white;
+}
+#mainPanel button.silver{
+	background-color: silver;
 	color: white;
 }
 
