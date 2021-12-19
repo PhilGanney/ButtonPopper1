@@ -16,10 +16,12 @@
 	height: 100px;
 }
 #mainPanel button.blue{
-	color: blue;
+	background-color: blue;
+	color: white;
 }
 #mainPanel button.red{
-	color: red;
+	background-color: red;
+	color: white;
 }
 
 
