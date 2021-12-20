@@ -1,9 +1,31 @@
+body{
+	background-color: black;
+}
+
+#scores{
+	background-color: white;
+	position: fixed;
+	top: 0px;
+	left: 50%;
+	height: 100px; 
+	max-height: 98%; 
+	width:300px; /*just a width to start us off*/
+	-moz-transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+
+#scores div{
+	width: 150px;
+	height: 100%;
+	display: inline-block;
+}
 
 #mainPanel{
 	position: fixed;
 	top: 100px;
 	left: 50%;
-	height: 300px; /*Avoids having toolbars unless needed*/
+	height: 300px; 
 	max-height: 98%; 
 	width:300px; /*just a width to start us off*/
 	-moz-transform: translateX(-50%);
@@ -54,7 +76,22 @@
 	color: black;
 }
 
+#metaControls{
+	position: fixed;
+	top: 400px;
+	left: 50%;
+	height: 60px; 
+	max-height: 98%; 
+	width:300px; /*just a width to start us off*/
+	-moz-transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
 
+#startBtn{
+	width: 100%;
+	height: 100%;
+}
 
 .limeBorder{
 	/*Great for testing!*/
