@@ -7,23 +7,21 @@ function startBtn(){
 	if (gameState == "running") { //this must be the first check on the button, so that pauses are as instantaneous as possible
 		pause();
 	} else if (gameState == "paused") {
-		gameTick = setInterval(function(){
-			t++;
-			document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
-		}, 1000);
-		gameState = "running";
-		document.getElementById("startBtn").innerHTML = "pause";
+		play();
 	} else if (gameState == "notStarted") {
 		t = 0; //t for time elapsed
-		gameTick = setInterval(function(){
-			t++;
-			document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
-		}, 1000);
-		gameState = "running";
-		document.getElementById("startBtn").innerHTML = "pause";
+		play();
 	}
 }
 
+function play(){
+	gameTick = setInterval(function(){
+			t++;
+			document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
+		}, 1000);
+	gameState = "running";
+	document.getElementById("startBtn").innerHTML = "pause";
+}
 
 function pause(){
 	clearInterval(gameTick);
