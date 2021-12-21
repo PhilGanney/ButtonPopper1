@@ -22,6 +22,7 @@ function play(){
 			btn.innerHTML = "+1";
 			btn.classList.add("green");
 			btn.classList.remove("silver");
+			btn.onclick = function() {goodBtn(1);} //can't put btn.onclick = goodBtn(1); as that would immediatly call the function, but could do btn.addEventListener("click", goodBtn, 1);
 			//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
 		}, 1000); //Using 1000 for now to run this once per second. It's hard to know how often this should run, and I think I'm going to need to do some trial and error at some point once I have more stuff built. 33 would make the game run at roughly 30 gameTicks per Second, which I was thinking would be ideal because of the 30fps standard for games that don't need super responsiveness, but this isn't frames of animation!
 	gameState = "running";
@@ -39,4 +40,9 @@ function randomInt(min, max) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
 	return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
+}
+
+function goodBtn(n){
+	let cs = document.getElementById("CS");
+	cs.innerHTML = (parseInt(cs.innerHTML) + n) + ""; //innerHTML is a string, but we want to do integer addition to it, so this takes the innerHTML as a string, converts it to integer, adds n, then converts that result back to a string via string concatenation with an empty string, and finally sets it back into the innerHTML
 }
