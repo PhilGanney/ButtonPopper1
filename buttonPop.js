@@ -15,9 +15,13 @@ function startBtn(){
 }
 
 function play(){
+	var btn;
 	gameTick = setInterval(function(){
 			t++;
-			document.getElementById("btn" + randomInt(1, 9)).innerHTML = "+1"  //testing randomInt(min, max)
+			btn = document.getElementById("btn" + randomInt(1, 9));
+			btn.innerHTML = "+1";
+			btn.classList.add("green");
+			btn.classList.remove("silver");
 			//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
 		}, 1000); //Using 1000 for now to run this once per second. It's hard to know how often this should run, and I think I'm going to need to do some trial and error at some point once I have more stuff built. 33 would make the game run at roughly 30 gameTicks per Second, which I was thinking would be ideal because of the 30fps standard for games that don't need super responsiveness, but this isn't frames of animation!
 	gameState = "running";
