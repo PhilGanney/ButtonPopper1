@@ -17,7 +17,8 @@ function startBtn(){
 function play(){
 	gameTick = setInterval(function(){
 			t++;
-			document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
+			document.getElementById("HS").innerHTML = randomInt(0, 9) //testing randomInt(min, max)
+			//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
 		}, 1000); //Using 1000 for now to run this once per second. It's hard to know how often this should run, and I think I'm going to need to do some trial and error at some point once I have more stuff built. 33 would make the game run at roughly 30 gameTicks per Second, which I was thinking would be ideal because of the 30fps standard for games that don't need super responsiveness, but this isn't frames of animation!
 	gameState = "running";
 	document.getElementById("startBtn").innerHTML = "pause";
@@ -27,4 +28,11 @@ function pause(){
 	clearInterval(gameTick);
 	gameState = "paused";
 	document.getElementById("startBtn").innerHTML = "unpause";
+}
+
+function randomInt(min, max) {
+	//lifted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random getRandomIntInclusive
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
 }
