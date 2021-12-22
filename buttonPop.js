@@ -55,16 +55,13 @@ function goodBtn(n, btn){
 	}
 }
 
-/*by "via class" we mean by swapping css classes that handle showing or hiding things
-Use in conjuction with hideViaClass(id) and css classes called "hidden" and "showing" that have css to hide/show things
+/*by "via class" we mean by removing or adding a class called "hidden" that sets css display to none
+Use in conjuction with hideViaClass(id) and a css class called "hidden".
+This is a slight change in how I've done this technique on other projects - there's no "showing" class, will also need specific selectors written in.
 */
 function showViaClass(id){
   document.getElementById(id).classList.remove("hidden");
 }
-
-/*by "via class" we mean by swapping css classes that handle showing or hiding things
-Use in conjuction with showViaClass(id) and css classes called "hidden" and "showing" that have css to hide/show things
-*/
 function hideViaClass(id){
 	document.getElementById(id).classList.add("hidden");
 }
