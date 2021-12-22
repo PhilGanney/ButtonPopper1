@@ -54,3 +54,17 @@ function goodBtn(n, btn){
 		btn.innerHTML = "0";
 	}
 }
+
+/*by "via class" we mean by swapping css classes that handle showing or hiding things
+Use in conjuction with hideViaClass(id) and css classes called "hidden" and "showing" that have css to hide/show things
+*/
+function showViaClass(id){
+  document.getElementById(id).classList.remove("hidden");
+}
+
+/*by "via class" we mean by swapping css classes that handle showing or hiding things
+Use in conjuction with showViaClass(id) and css classes called "hidden" and "showing" that have css to hide/show things
+*/
+function hideViaClass(id){
+	document.getElementById(id).classList.add("hidden");
+}

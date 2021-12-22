@@ -16,9 +16,18 @@ body{
 }
 
 #scores div{
-	width: 100px;
+	width: 150px;
     height: 100%;
     display: inline-block;
+	text-align: center;
+}
+
+#scores span{
+	font-size: 16pt;
+}
+
+#scores div.hidden {
+	display: none;
 }
 
 #mainPanel{
