@@ -16,9 +16,9 @@ body{
 }
 
 #scores div{
-	width: 150px;
-	height: 100%;
-	display: inline-block;
+	width: 100px;
+    height: 100%;
+    display: inline-block;
 }
 
 #mainPanel{
