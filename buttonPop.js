@@ -16,14 +16,28 @@ function startBtn(){
 
 function play(){
 	var btn;
+	var val;
 	gameTick = setInterval(function(){
 			t++;
 			btn = document.getElementById("btn" + randomInt(1, 9));
-			btn.innerHTML = "+1";
-			btn.classList.add("green");
-			btn.classList.remove("silver");
-			btn.onclick = function() {goodBtn(1, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
-			//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
+			val = randomInt(-9, 4);
+			if (val > 0){
+				btn.innerHTML = "+" + val;
+				
+				btn.classList.add("green");
+				btn.classList.remove("silver");
+				btn.classList.remove("red");
+				btn.onclick = function() {goodBtn(val, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
+				//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
+			} else {
+				btn.innerHTML = "" + val;
+				
+				btn.classList.add("red");
+				btn.classList.remove("silver");
+				btn.classList.remove("green");
+				btn.onclick = function() {badBtn(val, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
+				//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
+			}
 		}, 1000); //Using 1000 for now to run this once per second. It's hard to know how often this should run, and I think I'm going to need to do some trial and error at some point once I have more stuff built. 33 would make the game run at roughly 30 gameTicks per Second, which I was thinking would be ideal because of the 30fps standard for games that don't need super responsiveness, but this isn't frames of animation!
 	gameState = "running";
 	document.getElementById("startBtn").innerHTML = "pause";
@@ -53,10 +67,20 @@ function goodBtn(n, btn){
 		btn.classList.remove("green");
 		btn.classList.add("silver");
 		btn.innerHTML = "0";
-		if(parseInt(cs.innerHTML) == parseInt(ts.innerHTML)){
+		if(parseInt(cs.innerHTML) >= parseInt(ts.innerHTML)){
 			pause();
 			alert("Boom! Target score reached");
 		}
+	}
+}
+
+function badBtn(n, btn){
+	if (gameState == "running") {
+		let cs = document.getElementById("CS");
+		cs.innerHTML = (parseInt(cs.innerHTML) + n) + "";
+		btn.classList.remove("red");
+		btn.classList.add("silver");
+		btn.innerHTML = "0";
 	}
 }
 
