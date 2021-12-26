@@ -47,11 +47,16 @@ function goodBtn(n, btn){
 		//n is an integer that we add to the score
 		//btn is the button - this function is called indirectly via an anonymous function, so using the "this" keyword in this function wouldn't get the button but we can use "this" in the anonymous function and pass it down
 		let cs = document.getElementById("CS");
+		let ts = document.getElementById("TS");
 		cs.innerHTML = (parseInt(cs.innerHTML) + n) + ""; //innerHTML is a string, but we want to do integer addition to it, so this takes the innerHTML as a string, converts it to integer, adds n, then converts that result back to a string via string concatenation with an empty string, and finally sets it back into the innerHTML
 
 		btn.classList.remove("green");
 		btn.classList.add("silver");
 		btn.innerHTML = "0";
+		if(parseInt(cs.innerHTML) == parseInt(ts.innerHTML)){
+			pause();
+			alert("Boom! Target score reached");
+		}
 	}
 }
 
