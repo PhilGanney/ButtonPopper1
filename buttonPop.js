@@ -73,8 +73,13 @@ function pause(){
 	clearInterval(gameTick);
 	gameState = "paused";
 	document.getElementById("startBtn").innerHTML = "unpause";
-	if (isComplete){
-		showViaClass("TargetReached");
+	if(isComplete){ //game has been completed at some point
+		//alert("it's complete");
+		if(parseInt(document.getElementById("CS").innerHTML) >= parseInt(document.getElementById("TS").innerHTML)){ //score currently high enough to complete game here
+			showViaClass("TargetReached");
+		} else{  //game was completed on a previous run through but now the score isn't at target so it would be weird to see the regular message
+			showViaClass("AlreadyDone");
+		}
 		//make #highRow, #midRow, #lowRow dissappear
 		hideViaClass("highRow");
 		hideViaClass("midRow");
