@@ -108,6 +108,7 @@ function goodBtn(n, btn){
 			pause();
 			alert("Boom! Target score reached");
 		}
+		btn.onclick = function() {}
 	}
 }
 
@@ -118,6 +119,7 @@ function badBtn(n, btn){
 		btn.classList.remove("red");
 		btn.classList.add("silver");
 		btn.innerHTML = "0";
+		btn.onclick = function() {}
 	}
 }
 
