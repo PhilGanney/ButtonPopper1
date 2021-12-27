@@ -1,5 +1,6 @@
-var gameTick;
-var t;
+var gameTick; //the actual interval object
+var t; //t as in ticks elapsed
+const f = 700; //f for frequency - technically it's the amount of milliseconds between each game tick
 var gameState = "notStarted"; //running, paused, notStarted, gameOver
 
 function startBtn(){
@@ -11,13 +12,20 @@ function startBtn(){
 	} else if (gameState == "notStarted") {
 		t = 0; //t for time elapsed
 		play();
+	} else if (gameState == "gameOver") {
+		//make #highRow, #midRow, #lowRow reappear
+		showViaClass("highRow");
+		showViaClass("midRow");
+		showViaClass("lowRow");
+		//make #GAMEOVER dissappear
+		hideViaClass("GAMEOVER");
+		resetBoard();
 	}
 }
 
 function play(){
-	var btn;
-	var val;
 	gameTick = setInterval(function(){
+			var btn, val; //Needs to be set here, on each new run through of the interval (rather than the top of the play() function), in case we're running the interval frequently enough that this code can overlap itself and cause val to change for a new run while still being used for the previous run. That was the cause of a bug I caught in development, where on fast play throughs, clicking buttons often led to wildly different outcomes 
 			t++;
 			btn = document.getElementById("btn" + randomInt(1, 9));
 			val = randomInt(-9, 4);
@@ -27,18 +35,27 @@ function play(){
 				btn.classList.add("green");
 				btn.classList.remove("silver");
 				btn.classList.remove("red");
+				btn.classList.remove("black");
 				btn.onclick = function() {goodBtn(val, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
 				//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
+			} else if (val == -9  || val == -8 ) {
+				btn.innerHTML = "FAIL";
+				btn.classList.add("black");
+				btn.classList.remove("silver");
+				btn.classList.remove("green");
+				btn.classList.remove("red");
+				btn.onclick = function() {failBtn();} 
 			} else {
 				btn.innerHTML = "" + val;
 				
 				btn.classList.add("red");
 				btn.classList.remove("silver");
 				btn.classList.remove("green");
+				btn.classList.remove("black");
 				btn.onclick = function() {badBtn(val, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
 				//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
 			}
-		}, 1000); //Using 1000 for now to run this once per second. It's hard to know how often this should run, and I think I'm going to need to do some trial and error at some point once I have more stuff built. 33 would make the game run at roughly 30 gameTicks per Second, which I was thinking would be ideal because of the 30fps standard for games that don't need super responsiveness, but this isn't frames of animation!
+		}, f); //f for "frequency" - technically the number of milliseconds between gameTicks. Different levels might have frequency values. To set the value right takes a bit of trial and improvement.
 	gameState = "running";
 	document.getElementById("startBtn").innerHTML = "pause";
 }
@@ -47,6 +64,26 @@ function pause(){
 	clearInterval(gameTick);
 	gameState = "paused";
 	document.getElementById("startBtn").innerHTML = "unpause";
+}
+
+function resetBoard(){
+	let i;
+	var btn;
+	document.getElementById("CS").innerHTML = "0";
+	for (i = 1; i < 10; i++){
+		//alert(i + ""); //sanity check
+		btn = document.getElementById("btn" + i);
+		btn.innerHTML = "0";
+				
+		btn.classList.add("silver");
+		btn.classList.remove("red");
+		btn.classList.remove("green");
+		btn.classList.remove("black");
+		//btn.onclick = function() {}
+	}
+	gameState = "notStarted";
+	document.getElementById("startBtn").innerHTML = "Start";
+	
 }
 
 function randomInt(min, max) {
@@ -81,6 +118,21 @@ function badBtn(n, btn){
 		btn.classList.remove("red");
 		btn.classList.add("silver");
 		btn.innerHTML = "0";
+	}
+}
+
+function failBtn(){
+	if (gameState == "running") {
+		clearInterval(gameTick);
+		//alert("GAMEOVER");
+		//make #GAMEOVER appear 
+		showViaClass("GAMEOVER");
+		//make #highRow, #midRow, #lowRow dissappear
+		hideViaClass("highRow");
+		hideViaClass("midRow");
+		hideViaClass("lowRow");
+		gameState = "gameOver";
+		document.getElementById("startBtn").innerHTML = "reset the board";
 	}
 }
 
