@@ -73,6 +73,15 @@ function pause(){
 	clearInterval(gameTick);
 	gameState = "paused";
 	document.getElementById("startBtn").innerHTML = "unpause";
+	if (isComplete){
+		showViaClass("TargetReached");
+		//make #highRow, #midRow, #lowRow dissappear
+		hideViaClass("highRow");
+		hideViaClass("midRow");
+		hideViaClass("lowRow");
+		gameState = "targetReached";
+		document.getElementById("startBtn").innerHTML = "Continue this level";
+	}
 }
 function reachTarget(){
 	clearInterval(gameTick);
