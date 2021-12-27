@@ -31,13 +31,15 @@ body{
 	display: none;
 }
 
-#GAMEOVER{
+#GAMEOVER, #TargetReached{
 	width: 100%;
 	height: 100%;
 	background-color: lime;
 	color: black;
 	position: absolute;
 }
+
+
 
 #mainPanel{
 	position: fixed;

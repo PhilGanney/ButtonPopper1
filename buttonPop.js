@@ -1,7 +1,8 @@
 var gameTick; //the actual interval object
 var t; //t as in ticks elapsed
 const f = 700; //f for frequency - technically it's the amount of milliseconds between each game tick
-var gameState = "notStarted"; //running, paused, notStarted, gameOver
+var gameState = "notStarted"; //running, paused, notStarted, gameOver, targetReached
+var isComplete = false;
 
 function startBtn(){
 	//This function is run on the button that starts the game, that same button will pause it if the game is running and unpause if the game is paused
@@ -12,6 +13,14 @@ function startBtn(){
 	} else if (gameState == "notStarted") {
 		t = 0; //t for time elapsed
 		play();
+	} else if (gameState == "targetReached") {
+		//make #highRow, #midRow, #lowRow reappear
+		showViaClass("highRow");
+		showViaClass("midRow");
+		showViaClass("lowRow");
+		//make #TargetReached dissappear
+		hideViaClass("TargetReached");
+		gameState = "paused";
 	} else if (gameState == "gameOver") {
 		//make #highRow, #midRow, #lowRow reappear
 		showViaClass("highRow");
@@ -65,6 +74,18 @@ function pause(){
 	gameState = "paused";
 	document.getElementById("startBtn").innerHTML = "unpause";
 }
+function reachTarget(){
+	clearInterval(gameTick);
+	gameState = "targetReached";
+	document.getElementById("startBtn").innerHTML = "Continue this level";
+	
+	isComplete = true;
+	showViaClass("TargetReached");
+	//make #highRow, #midRow, #lowRow dissappear
+	hideViaClass("highRow");
+	hideViaClass("midRow");
+	hideViaClass("lowRow");
+}
 
 function resetBoard(){
 	let i;
@@ -104,9 +125,10 @@ function goodBtn(n, btn){
 		btn.classList.remove("green");
 		btn.classList.add("silver");
 		btn.innerHTML = "0";
-		if(parseInt(cs.innerHTML) >= parseInt(ts.innerHTML)){
-			pause();
-			alert("Boom! Target score reached");
+		if(!isComplete){
+			if(parseInt(cs.innerHTML) >= parseInt(ts.innerHTML)){
+				reachTarget();
+			}
 		}
 		btn.onclick = function() {}
 	}
