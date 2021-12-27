@@ -18,8 +18,9 @@ function startBtn(){
 		showViaClass("highRow");
 		showViaClass("midRow");
 		showViaClass("lowRow");
-		//make #TargetReached dissappear
+		//make #TargetReached, #AlreadyDone dissappear
 		hideViaClass("TargetReached");
+		hideViaClass("AlreadyDone");
 		gameState = "paused";
 	} else if (gameState == "gameOver") {
 		//make #highRow, #midRow, #lowRow reappear
@@ -28,6 +29,7 @@ function startBtn(){
 		showViaClass("lowRow");
 		//make #GAMEOVER dissappear
 		hideViaClass("GAMEOVER");
+		hideViaClass("TargetReached");
 		resetBoard();
 	}
 }
@@ -77,8 +79,10 @@ function pause(){
 		//alert("it's complete");
 		if(parseInt(document.getElementById("CS").innerHTML) >= parseInt(document.getElementById("TS").innerHTML)){ //score currently high enough to complete game here
 			showViaClass("TargetReached");
+			hideViaClass("AlreadyDone");
 		} else{  //game was completed on a previous run through but now the score isn't at target so it would be weird to see the regular message
 			showViaClass("AlreadyDone");
+			hideViaClass("TargetReached");
 		}
 		//make #highRow, #midRow, #lowRow dissappear
 		hideViaClass("highRow");
