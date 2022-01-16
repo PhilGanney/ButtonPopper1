@@ -126,10 +126,19 @@ function resetBoard(){
 }
 
 function randomInt(min, max) {
+	//max and min are inclusive, and can actually be decimals though they'll be rounded away from the middle
 	//lifted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random getRandomIntInclusive
-	min = Math.ceil(min);
-	max = Math.floor(max);
-	return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
+	min = Math.ceil(min); //Rounds min up to the next nearest int above
+	max = Math.floor(max); //Rounds max down to the next nearest int below
+	return Math.floor(Math.random() * (max - min + 1) + min); //Gets a random floating point number and converts it into an int within the given range. See full logic below.
+	/*(max - min + 1) gets the size of the range, 
+		in other words the amount of different options 
+		eg if min is 10 and max is 15 then this would be 6. 
+	Math.random() gets a "floating-point, pseudo-random number between 0 (inclusive) and 1 (exclusive)",
+		This uses the maths concept of using probabilities in terms of numbers between 0 & 1. 
+	So we multiply the size of the range and the random 0-1 value together and then add on the minimum number to get a random number in the right range
+		then it's rounded off to an int
+*/
 }
 
 function goodBtn(n, btn){
