@@ -5,6 +5,7 @@ var gameState = "notStarted"; //running, paused, notStarted, gameOver, targetRea
 var isComplete = false;
 
 var globals = {
+	"lvlNames": ["Standard Slow","Standard Faster","Standard Crazy","Complex Slow","Complex Faster","Complex Crazy","Devious Slow","Devious Faster","Devious Crazy"],
 	"lvls": {
 		1: {
 			"f": 700,
@@ -24,19 +25,19 @@ var globals = {
 			"ts": 60,
 			"mode": "standard"
 		},
-		4: { 
+		4: { /*complex mode not coded yet*/
 			"f": 700,
 			"txt": "Complex Slow: (game mode instructions)",
 			"ts": 20,
 			"mode": "complex"
 		},
-		5: {
+		5: {/*complex mode not coded yet*/
 			"f": 550,
 			"txt": "Complex Faster: A bit faster and a higher target",
 			"ts": 40,
 			"mode": "complex"
 		},
-		6: {
+		6: {/*complex mode not coded yet*/
 			"f": 150,
 			"txt": "Complex Crazy: Crazy fast and an even higher target",
 			"ts": 60,
@@ -63,6 +64,54 @@ var globals = {
 	}
 }
 
+function showLevelChoices(){
+	//Hides whatever screen the player was on, and shows the level choices in the mainPanel
+	/*resetBoard() handles a bunch of things that we also need here:
+		resetting the current score to 0
+		setting the colour of all the game buttons back to silver
+		setting the game state to notStarted
+		and last but not least: setting the button used for start and pause, back to showing "Start"
+	It also sets all the game buttons back to showing 0 which we don't need, but it's not problematic
+	*/
+	resetBoard();
+	showViaClass("highRow");
+	showViaClass("midRow");
+	showViaClass("lowRow");
+	/*hide all the divs that could have been showing the back to level choices button 
+	GAMEOVER
+	TargetReached
+	AlreadyDone
+	*/
+	hideViaClass("levelInstructions");
+	hideViaClass("GAMEOVER");
+	hideViaClass("TargetReached");
+	hideViaClass("AlreadyDone");
+	//hide the back to level choices button
+	hideViaClass("backToLvlChoicesBtn");
+	//hide the start button
+	hideViaClass("startBtn");
+	//set the target score back to ##
+	document.getElementById("TS").innerText = "##";
+	
+	//add the choices class to mainPanel to set css correctly
+	document.getElementById("mainPanel").classList.add("choices");
+	
+	/*set all the button texts to the apropriate names
+	globals.lvlNames is an array just of the names to use on the buttons in same order. 
+	buttons are numbered 1 to 9 but arrays start at index 0, so btn1 text should become value in globals.lvlNames[0]*/
+	for (i = 1; i < 10; i++){
+		btn = document.getElementById("btn" + i);
+		btn.innerText = globals.lvlNames[i-1];
+		/*Following doesn't look needed, but it's here to avoid a bug / JS working differently to my expectations 
+		Simply doing btn.onclick = function() {showLevel(i);}  will set all of the onclicks to showLevel(10)
+		presumably because JS would use the last value of i after the loop completes, rather than the value it had when the onclick was assigned
+		*/
+		let j = i; 
+		btn.onclick = function() {showLevel(j);} 
+	}
+	
+}
+
 function showLevel(lvlNum){
 	console.log("showLevel(" + lvlNum + ")");
 	showViaClass("levelInstructions");
@@ -76,6 +125,8 @@ function showLevel(lvlNum){
 	hideViaClass("highRow");
 	hideViaClass("midRow");
 	hideViaClass("lowRow");
+	//show the back to level choices button
+	showViaClass("backToLvlChoicesBtn");
 	//show the start button
 	showViaClass("startBtn");
 	let btn = document.getElementById("startBtn");
@@ -88,6 +139,7 @@ function showLevel(lvlNum){
 		showViaClass("midRow");
 		showViaClass("lowRow");
 		hideViaClass("levelInstructions");
+		hideViaClass("backToLvlChoicesBtn");
 		//remove the "choices" class from #mainPanel, that class makes the text fit the buttons, but would make the numbers in game a bit small
 		document.getElementById("mainPanel").classList.remove("choices");
 		//set the board to how it should be at the start of play
@@ -189,10 +241,13 @@ function pause(){
 }
 function reachTarget(){
 	clearInterval(gameTick);
-	gameState = "targetReached";
-	document.getElementById("startBtn").innerHTML = "Continue this level";
-	
 	isComplete = true;
+	gameState = "targetReached";
+	
+	//show backToLvlChoicesBtn
+	showViaClass("backToLvlChoicesBtn");
+	//change the startBtn text
+	document.getElementById("startBtn").innerHTML = "Continue this level";
 	showViaClass("TargetReached");
 	//make #highRow, #midRow, #lowRow dissappear
 	hideViaClass("highRow");
@@ -201,6 +256,13 @@ function reachTarget(){
 }
 
 function resetBoard(){
+	/*As name implies, this func does a set of things needed to reset the game "board":
+		resets the current score to 0
+		sets all the game buttons back to showing 0 on them
+		sets the colour of all the game buttons back to silver
+		sets the game state to notStarted
+		and last but not least: sets the button used for start and pause, back to showing "Start"
+	*/
 	let i;
 	var btn;
 	document.getElementById("CS").innerHTML = "0";
@@ -278,6 +340,8 @@ function failBtn(){
 		hideViaClass("midRow");
 		hideViaClass("lowRow");
 		gameState = "gameOver";
+		//show backToLvlChoicesBtn
+		showViaClass("backToLvlChoicesBtn");
 		document.getElementById("startBtn").innerHTML = "reset the board";
 	}
 }
