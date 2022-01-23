@@ -6,59 +6,59 @@ var isComplete = false;
 
 var globals = {
 	"lvls": {
-		1: {
+		1: {/*Easy mode not coded yet*/
 			"f": 700,
 			"txt": "Easy Slow: (game mode instructions)",
 			"ts": 20,
-			"mode": "simple"
+			"mode": "easy"
 		},
-		2: {
+		2: {/*Easy mode not coded yet*/
 			"f": 550,
 			"txt": "Easy Faster: A bit faster and a higher target",
-			"ts": 30,
-			"mode": "simple"
+			"ts": 40,
+			"mode": "easy"
 		},
-		3: {
+		3: { /*Easy mode not coded yet*/
 			"f": 150,
 			"txt": "Easy Crazy: Crazy fast and an even higher target",
 			"ts": 60,
-			"mode": "simple"
+			"mode": "easy"
 		},
-		4: {
+		4: { 
 			"f": 700,
 			"txt": "Standard Slow: Pop green, not red or black",
 			"ts": 20,
-			"mode": "simple"
+			"mode": "standard"
 		},
 		5: {
 			"f": 550,
 			"txt": "Standard Faster: A bit faster and a higher target",
-			"ts": 30,
-			"mode": "simple"
+			"ts": 40,
+			"mode": "standard"
 		},
 		6: {
 			"f": 150,
 			"txt": "Standard Crazy: Crazy fast and an even higher target",
 			"ts": 60,
-			"mode": "simple"
+			"mode": "standard"
 		},
-		7: { /*Not properly fleshed out yet*/
+		7: { /*devious mode not coded yet*/
 			"f": 700,
 			"txt": "Devious Slow: (game mode instructions)",
 			"ts": 20,
-			"mode": "simple"
+			"mode": "devious"
 		},
-		8: { /*Not properly fleshed out yet*/
+		8: { /*devious mode not coded yet*/
 			"f": 550,
 			"txt": "Devious Faster: A bit faster and a higher target",
-			"ts": 30,
-			"mode": "simple"
+			"ts": 40,
+			"mode": "devious"
 		},
-		9: { /*Not properly fleshed out yet*/
+		9: { /*devious mode not coded yet*/
 			"f": 150,
 			"txt": "Devious Crazy: Crazy fast and an even higher target",
 			"ts": 60,
-			"mode": "simple"
+			"mode": "devious"
 		}
 	}
 }
