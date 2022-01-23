@@ -280,6 +280,8 @@ function resetBoard(){
 	gameState = "notStarted";
 	document.getElementById("startBtn").innerHTML = "Start";
 	
+	hideViaClass("backToLvlChoicesBtn");
+	
 }
 
 function randomInt(min, max) {
