@@ -6,41 +6,41 @@ var isComplete = false;
 
 var globals = {
 	"lvls": {
-		1: {/*Easy mode not coded yet*/
+		1: {
 			"f": 700,
-			"txt": "Easy Slow: (game mode instructions)",
-			"ts": 20,
-			"mode": "easy"
-		},
-		2: {/*Easy mode not coded yet*/
-			"f": 550,
-			"txt": "Easy Faster: A bit faster and a higher target",
-			"ts": 40,
-			"mode": "easy"
-		},
-		3: { /*Easy mode not coded yet*/
-			"f": 150,
-			"txt": "Easy Crazy: Crazy fast and an even higher target",
-			"ts": 60,
-			"mode": "easy"
-		},
-		4: { 
-			"f": 700,
-			"txt": "Standard Slow: Pop green, not red or black",
+			"txt": "Standard Slow: Pop green, not red or black.",
 			"ts": 20,
 			"mode": "standard"
 		},
-		5: {
+		2: {
 			"f": 550,
 			"txt": "Standard Faster: A bit faster and a higher target",
 			"ts": 40,
 			"mode": "standard"
 		},
-		6: {
+		3: {
 			"f": 150,
 			"txt": "Standard Crazy: Crazy fast and an even higher target",
 			"ts": 60,
 			"mode": "standard"
+		},
+		4: { 
+			"f": 700,
+			"txt": "Complex Slow: (game mode instructions)",
+			"ts": 20,
+			"mode": "complex"
+		},
+		5: {
+			"f": 550,
+			"txt": "Complex Faster: A bit faster and a higher target",
+			"ts": 40,
+			"mode": "complex"
+		},
+		6: {
+			"f": 150,
+			"txt": "Complex Crazy: Crazy fast and an even higher target",
+			"ts": 60,
+			"mode": "complex"
 		},
 		7: { /*devious mode not coded yet*/
 			"f": 700,
@@ -76,6 +76,8 @@ function showLevel(lvlNum){
 	hideViaClass("highRow");
 	hideViaClass("midRow");
 	hideViaClass("lowRow");
+	//show the start button
+	showViaClass("startBtn");
 	let btn = document.getElementById("startBtn");
 	btn.onclick = function() {
 		/*on the next click we also want to show highRow midRow lowRow again, and hide the level instructions, 
