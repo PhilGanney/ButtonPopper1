@@ -343,6 +343,7 @@ function failBtn(){
 		//show backToLvlChoicesBtn
 		showViaClass("backToLvlChoicesBtn");
 		document.getElementById("startBtn").innerHTML = "reset the board";
+		playSound('Sounds/Faaailuuuuure.mp3');
 	}
 }
 
@@ -355,4 +356,11 @@ function showViaClass(id){
 }
 function hideViaClass(id){
 	document.getElementById(id).classList.add("hidden");
+}
+
+function playSound(href) {
+	console.log("playsound");
+	//Sound files are in /Sounds
+	var audio = new Audio(href);
+	audio.play();
 }
