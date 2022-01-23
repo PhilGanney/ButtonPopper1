@@ -2,22 +2,34 @@ body{
 	background-color: black;
 }
 
-header,
+header{
+	/*Top of the screen*/
+	text-align: center;
+	background-color: white;
+	color: black;
+	position: fixed;
+	top: -14px;
+	padding-bottom: 14px;
+	left: 50%;
+	height: 40px; 
+	max-height: 98%; 
+	width:300px; /* Match the width of other sections*/
+	-moz-transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
 #scores{
+	/*Just below header*/
 	background-color: white;
 	position: fixed;
-	top: 0px;
+	top: 40px;
 	left: 50%;
-	height: 100px; 
+	height: 60px; 
 	max-height: 98%; 
 	width:300px; /*just a width to start us off*/
 	-moz-transform: translateX(-50%);
 	-webkit-transform: translateX(-50%);
 	transform: translateX(-50%);
-}
-
-header{
-	color: black;
 }
 
 #scores div{
@@ -31,6 +43,7 @@ header{
 	font-size: 16pt;
 }
 
+#scores div.hidden,
 .hidden{
 	display: none;
 }
@@ -46,6 +59,8 @@ header{
 
 
 #mainPanel{
+	/* The main portion of the screen, in the centre of the focal point.
+	Below scores and header, above "metaControls" (eg pause).*/
 	position: fixed;
 	top: 100px;
 	left: 50%;
@@ -106,6 +121,7 @@ header{
 }
 
 #metaControls{
+	/*meta controls as in controls like start/pause that aren't part of the main action of the game*/
 	position: fixed;
 	top: 400px;
 	left: 50%;

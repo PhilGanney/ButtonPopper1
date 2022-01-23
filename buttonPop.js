@@ -15,8 +15,6 @@ var globals = {
 
 function showLevel(lvlNum){
 	console.log("showLevel(" + lvlNum + ")");
-	//show scores 
-	showViaClass("scores");
 	showViaClass("levelInstructions");
 	//instructionsHere
 	document.getElementById("instructionsHere").innerText = globals.lvls[1].txt;
@@ -24,7 +22,6 @@ function showLevel(lvlNum){
 	hideViaClass("highRow");
 	hideViaClass("midRow");
 	hideViaClass("lowRow");
-	hideViaClass("header");
 	let btn = document.getElementById("startBtn");
 	btn.onclick = function() {
 		/*on the next click we also want to show highRow midRow lowRow again, and hide the level instructions, 
@@ -35,6 +32,7 @@ function showLevel(lvlNum){
 		showViaClass("midRow");
 		showViaClass("lowRow");
 		hideViaClass("levelInstructions");
+		resetBoard();
 		startBtn();
 		btn.onclick = function() {
 			startBtn();
