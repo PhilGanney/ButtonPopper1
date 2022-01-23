@@ -24,12 +24,12 @@
 		-->
 		<header id="header"><h3>Button Popper by Phil Ganney</h3></header>
 		<div id="scores" class=""><!--Only show two of these at a time. Three scores at once doesn't really work: ugly and adds layout complexity for user and dev, -->
-			<div id="curScoreDiv" class="">Current Score<br/><span id="CS" class="">0</span></div><div id="hiScoreDiv" class="hidden">High Score<br/><span id="HS" class="">0</span></div><div id="targetScoreDiv" class="">Target Score<br/><span id="TS" class="">20</span></div>
+			<div id="curScoreDiv" class="">Current Score<br/><span id="CS" class="">0</span></div><div id="hiScoreDiv" class="hidden">High Score<br/><span id="HS" class="">0</span></div><div id="targetScoreDiv" class="">Target Score<br/><span id="TS" class="">##</span></div>
 		</div>
-		<div id="mainPanel" class="limeBorder">
-			<div id="highRow" class=""><button type="button" id="btn1" class="silver">Lvl 1</button><button type="button" id="btn2" class="silver">Lvl 2</button><button type="button" id="btn3" class="silver">0</button></div>
-			<div id="midRow" class=""><button type="button" id="btn4" class="silver">0</button><button type="button" id="btn5" class="silver">0</button><button type="button" id="btn6" class="silver">0</button></div>
-			<div id="lowRow" class=""><button type="button" id="btn7" class="silver">0</button><button type="button" id="btn8" class="silver">0</button><button type="button" id="btn9" class="silver">0</button></div>
+		<div id="mainPanel" class="limeBorder choices">
+			<div id="highRow" class=""><button type="button" id="btn1" class="silver">Easy Slow</button><button type="button" id="btn2" class="silver">Easy Faster</button><button type="button" id="btn3" class="silver">Easy Crazy</button></div>
+			<div id="midRow" class=""><button type="button" id="btn4" class="silver">Standard Slow</button><button type="button" id="btn5" class="silver">Standard Faster</button><button type="button" id="btn6" class="silver">Standard Crazy</button></div>
+			<div id="lowRow" class=""><button type="button" id="btn7" class="silver">Devious Slow</button><button type="button" id="btn8" class="silver">Devious Faster</button><button type="button" id="btn9" class="silver">Devious Crazy</button></div>
 			<div id="GAMEOVER" class="hidden"><h1>FAILURE!<br/>FAILURE!<br/>Don't tap those black buttons with "Fail" on them!</h1></div>
 			<div id="TargetReached" class="hidden"><h1>SUCCESS!<br/>Target Score Reached<br/></h1></div>
 			<div id="AlreadyDone" class="hidden"><h1>You reached the target score earlier</h1></div>
@@ -37,7 +37,7 @@
 		</div>
 		<div id="metaControls" class="">
 			<!--onclick overidden in JS after first use-->
-			<button type="button" id="startBtn" class="" onclick="showLevel(1)">Start</button>
+			<button type="button" id="startBtn" class="" onclick="showLevel(3)">Start</button>
 		</div>
 		
 	</body>

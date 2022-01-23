@@ -8,7 +8,57 @@ var globals = {
 	"lvls": {
 		1: {
 			"f": 700,
-			"txt": "Level 1: Pop green, not red or black"
+			"txt": "Easy Slow: (game mode instructions)",
+			"ts": 20,
+			"mode": "simple"
+		},
+		2: {
+			"f": 550,
+			"txt": "Easy Faster: A bit faster and a higher target",
+			"ts": 30,
+			"mode": "simple"
+		},
+		3: {
+			"f": 150,
+			"txt": "Easy Crazy: Crazy fast and an even higher target",
+			"ts": 60,
+			"mode": "simple"
+		},
+		4: {
+			"f": 700,
+			"txt": "Standard Slow: Pop green, not red or black",
+			"ts": 20,
+			"mode": "simple"
+		},
+		5: {
+			"f": 550,
+			"txt": "Standard Faster: A bit faster and a higher target",
+			"ts": 30,
+			"mode": "simple"
+		},
+		6: {
+			"f": 150,
+			"txt": "Standard Crazy: Crazy fast and an even higher target",
+			"ts": 60,
+			"mode": "simple"
+		},
+		7: { /*Not properly fleshed out yet*/
+			"f": 700,
+			"txt": "Devious Slow: (game mode instructions)",
+			"ts": 20,
+			"mode": "simple"
+		},
+		8: { /*Not properly fleshed out yet*/
+			"f": 550,
+			"txt": "Devious Faster: A bit faster and a higher target",
+			"ts": 30,
+			"mode": "simple"
+		},
+		9: { /*Not properly fleshed out yet*/
+			"f": 150,
+			"txt": "Devious Crazy: Crazy fast and an even higher target",
+			"ts": 60,
+			"mode": "simple"
 		}
 	}
 }
@@ -17,7 +67,11 @@ function showLevel(lvlNum){
 	console.log("showLevel(" + lvlNum + ")");
 	showViaClass("levelInstructions");
 	//instructionsHere
-	document.getElementById("instructionsHere").innerText = globals.lvls[1].txt;
+	document.getElementById("instructionsHere").innerText = globals.lvls[lvlNum].txt;
+	//Target Score TS
+	document.getElementById("TS").innerText = globals.lvls[lvlNum].ts;
+	//Set the frequency
+	f = globals.lvls[lvlNum].f;
 	//hide highRow midRow lowRow
 	hideViaClass("highRow");
 	hideViaClass("midRow");
@@ -32,6 +86,9 @@ function showLevel(lvlNum){
 		showViaClass("midRow");
 		showViaClass("lowRow");
 		hideViaClass("levelInstructions");
+		//remove the "choices" class from #mainPanel, that class makes the text fit the buttons, but would make the numbers in game a bit small
+		document.getElementById("mainPanel").classList.remove("choices");
+		//set the board to how it should be at the start of play
 		resetBoard();
 		startBtn();
 		btn.onclick = function() {

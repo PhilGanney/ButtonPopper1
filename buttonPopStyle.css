@@ -78,6 +78,11 @@ header{
 	font-size: 20pt;
 }
 
+#mainPanel.choices button{
+	font-size: 17pt; /*when the mainPanel buttons are being used for the level choices, we need to allow room for "Standard" on one line*/
+	padding: 0px; /*Text is centred, so this just allows us to have slightly more text before clipping*/
+}
+
 #mainPanel button.red{
 	background-color: red;
 	color: white;
