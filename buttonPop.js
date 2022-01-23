@@ -1,8 +1,46 @@
 var gameTick; //the actual interval object
 var t; //t as in ticks elapsed
-const f = 700; //f for frequency - technically it's the amount of milliseconds between each game tick
+var f = 700; //f for frequency - technically it's the amount of milliseconds between each game tick
 var gameState = "notStarted"; //running, paused, notStarted, gameOver, targetReached
 var isComplete = false;
+
+var globals = {
+	"lvls": {
+		1: {
+			"f": 700,
+			"txt": "Level 1: Pop green, not red or black"
+		}
+	}
+}
+
+function showLevel(lvlNum){
+	console.log("showLevel(" + lvlNum + ")");
+	//show scores 
+	showViaClass("scores");
+	showViaClass("levelInstructions");
+	//instructionsHere
+	document.getElementById("instructionsHere").innerText = globals.lvls[1].txt;
+	//hide highRow midRow lowRow
+	hideViaClass("highRow");
+	hideViaClass("midRow");
+	hideViaClass("lowRow");
+	hideViaClass("header");
+	let btn = document.getElementById("startBtn");
+	btn.onclick = function() {
+		/*on the next click we also want to show highRow midRow lowRow again, and hide the level instructions, 
+		but we don't need to do it usually, it's at best inneficient code and at worst potentially problematic
+		so we also set the onclick function back to just being startBtn()
+		*/
+		showViaClass("highRow");
+		showViaClass("midRow");
+		showViaClass("lowRow");
+		hideViaClass("levelInstructions");
+		startBtn();
+		btn.onclick = function() {
+			startBtn();
+		}
+	}
+}
 
 function startBtn(){
 	//This function is run on the button that starts the game, that same button will pause it if the game is running and unpause if the game is paused

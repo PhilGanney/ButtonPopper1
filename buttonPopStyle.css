@@ -2,6 +2,7 @@ body{
 	background-color: black;
 }
 
+header,
 #scores{
 	background-color: white;
 	position: fixed;
@@ -15,6 +16,10 @@ body{
 	transform: translateX(-50%);
 }
 
+header{
+	color: black;
+}
+
 #scores div{
 	width: 150px;
     height: 100%;
@@ -26,8 +31,7 @@ body{
 	font-size: 16pt;
 }
 
-#scores div.hidden,
-#mainPanel div.hidden{
+.hidden{
 	display: none;
 }
 
@@ -95,7 +99,7 @@ body{
 	background-color: silver;
 	color: black;
 }
-#mainPanel button.black{
+#mainPanel .black{
 	background-color: black;
 	color: white;
 	font-weight: bold;
