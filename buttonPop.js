@@ -123,6 +123,8 @@ function showLevel(lvlNum){
 	document.getElementById("TS").innerText = globals.lvls[lvlNum].ts;
 	//Set the frequency
 	f = globals.lvls[lvlNum].f;
+	//set the gameMode
+	gameMode = globals.lvls[lvlNum].mode;
 	//hide highRow midRow lowRow
 	hideViaClass("highRow");
 	hideViaClass("midRow");
