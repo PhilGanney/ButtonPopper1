@@ -3,6 +3,8 @@ var t; //t as in ticks elapsed
 var f = 700; //f for frequency - technically it's the amount of milliseconds between each game tick
 var gameState = "notStarted"; //running, paused, notStarted, gameOver, targetReached
 var isComplete = false;
+var gameModes = ["standard", "complex", "devious"]; //all of the game modes
+var gameMode = "standard";//the current game mode
 
 var globals = {
 	"lvlNames": ["Standard Slow","Standard Faster","Standard Crazy","Complex Slow","Complex Faster","Complex Crazy","Devious Slow","Devious Faster","Devious Crazy"],
@@ -182,40 +184,117 @@ function startBtn(){
 }
 
 function play(){
-	gameTick = setInterval(function(){
-			var btn, val; //Needs to be set here, on each new run through of the interval (rather than the top of the play() function), in case we're running the interval frequently enough that this code can overlap itself and cause val to change for a new run while still being used for the previous run. That was the cause of a bug I caught in development, where on fast play throughs, clicking buttons often led to wildly different outcomes 
-			t++;
-			btn = document.getElementById("btn" + randomInt(1, 9));
-			val = randomInt(-9, 4);
-			if (val > 0){
-				btn.innerHTML = "+" + val;
-				
-				btn.classList.add("green");
-				btn.classList.remove("silver");
-				btn.classList.remove("red");
-				btn.classList.remove("black");
-				btn.onclick = function() {goodBtn(val, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
-				//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
-			} else if (val == -9  || val == -8 ) {
-				btn.innerHTML = "FAIL";
-				btn.classList.add("black");
-				btn.classList.remove("silver");
-				btn.classList.remove("green");
-				btn.classList.remove("red");
-				btn.onclick = function() {failBtn();} 
-			} else {
-				btn.innerHTML = "" + val;
-				
-				btn.classList.add("red");
-				btn.classList.remove("silver");
-				btn.classList.remove("green");
-				btn.classList.remove("black");
-				btn.onclick = function() {badBtn(val, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
-				//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
-			}
-		}, f); //f for "frequency" - technically the number of milliseconds between gameTicks. Different levels might have frequency values. To set the value right takes a bit of trial and improvement.
+	if (gameMode == "standard"){
+		gameTick = setInterval(playStandard, f); //f for "frequency" - technically the number of milliseconds between gameTicks. Different levels might have frequency values. To set the value right takes a bit of trial and improvement.
+	} else if (gameMode == "complex"){
+		gameTick = setInterval(playComplex, f);
+	} else if (gameMode == "devious"){
+		gameTick = setInterval(playDevious, f);
+	} else {  //developer error
+		console.log("gameMode not found in play() else if chain");
+		return;
+	} 
 	gameState = "running";
 	document.getElementById("startBtn").innerHTML = "pause";
+}
+
+function playStandard(){
+	var btn, val; //Needs to be set here, on each new run through of the interval (rather than the top of the play() function), in case we're running the interval frequently enough that this code can overlap itself and cause val to change for a new run while still being used for the previous run. That was the cause of a bug I caught in development, where on fast play throughs, clicking buttons often led to wildly different outcomes 
+	t++;
+	btn = document.getElementById("btn" + randomInt(1, 9));
+	val = randomInt(-9, 4);
+	if (val > 0){
+		btn.innerHTML = "+" + val;
+		
+		btn.classList.add("green");
+		btn.classList.remove("silver");
+		btn.classList.remove("red");
+		btn.classList.remove("black");
+		btn.onclick = function() {goodBtn(val, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
+		//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
+	} else if (val == -9  || val == -8 ) {
+		btn.innerHTML = "FAIL";
+		btn.classList.add("black");
+		btn.classList.remove("silver");
+		btn.classList.remove("green");
+		btn.classList.remove("red");
+		btn.onclick = function() {failBtn();} 
+	} else {
+		btn.innerHTML = "" + val;
+		
+		btn.classList.add("red");
+		btn.classList.remove("silver");
+		btn.classList.remove("green");
+		btn.classList.remove("black");
+		btn.onclick = function() {badBtn(val, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
+		//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
+	}
+}
+function playComplex(){
+	//TODO: Alter this function for the needs of playComplex
+	var btn, val; //Needs to be set here, on each new run through of the interval (rather than the top of the play() function), in case we're running the interval frequently enough that this code can overlap itself and cause val to change for a new run while still being used for the previous run. That was the cause of a bug I caught in development, where on fast play throughs, clicking buttons often led to wildly different outcomes 
+	t++;
+	btn = document.getElementById("btn" + randomInt(1, 9));
+	val = randomInt(5, 10);
+	if (val > 0){
+		btn.innerHTML = "+" + val;
+		
+		btn.classList.add("green");
+		btn.classList.remove("silver");
+		btn.classList.remove("red");
+		btn.classList.remove("black");
+		btn.onclick = function() {goodBtn(val, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
+		//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
+	} else if (val == -9  || val == -8 ) {
+		btn.innerHTML = "FAIL";
+		btn.classList.add("black");
+		btn.classList.remove("silver");
+		btn.classList.remove("green");
+		btn.classList.remove("red");
+		btn.onclick = function() {failBtn();} 
+	} else {
+		btn.innerHTML = "" + val;
+		
+		btn.classList.add("red");
+		btn.classList.remove("silver");
+		btn.classList.remove("green");
+		btn.classList.remove("black");
+		btn.onclick = function() {badBtn(val, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
+		//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
+	}
+}
+function playDevious(){
+	//TODO: Alter this function for the needs of playDevious
+	var btn, val; //Needs to be set here, on each new run through of the interval (rather than the top of the play() function), in case we're running the interval frequently enough that this code can overlap itself and cause val to change for a new run while still being used for the previous run. That was the cause of a bug I caught in development, where on fast play throughs, clicking buttons often led to wildly different outcomes 
+	t++;
+	btn = document.getElementById("btn" + randomInt(1, 9));
+	val = randomInt(10, 40);
+	if (val > 0){
+		btn.innerHTML = "+" + val;
+		
+		btn.classList.add("green");
+		btn.classList.remove("silver");
+		btn.classList.remove("red");
+		btn.classList.remove("black");
+		btn.onclick = function() {goodBtn(val, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
+		//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
+	} else if (val == -9  || val == -8 ) {
+		btn.innerHTML = "FAIL";
+		btn.classList.add("black");
+		btn.classList.remove("silver");
+		btn.classList.remove("green");
+		btn.classList.remove("red");
+		btn.onclick = function() {failBtn();} 
+	} else {
+		btn.innerHTML = "" + val;
+		
+		btn.classList.add("red");
+		btn.classList.remove("silver");
+		btn.classList.remove("green");
+		btn.classList.remove("black");
+		btn.onclick = function() {badBtn(val, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
+		//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
+	}
 }
 
 function pause(){
