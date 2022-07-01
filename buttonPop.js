@@ -5,6 +5,7 @@ var gameState = "notStarted"; //running, paused, notStarted, gameOver, targetRea
 var isComplete = false;
 var gameModes = ["standard", "complex", "devious"]; //all of the game modes
 var gameMode = "standard";//the current game mode
+var score = 0;
 
 var globals = {
 	"lvlNames": ["Standard Slow","Standard Faster","Standard Crazy","Complex Slow","Complex Faster","Complex Crazy","Devious Slow","Devious Faster","Devious Crazy"],
@@ -29,7 +30,7 @@ var globals = {
 		},
 		4: { /*complex mode not coded yet*/
 			"f": 700,
-			"txt": "Complex Slow: (game mode instructions)",
+			"txt": "Complex Slow: Pop double your current score, mistakes take off difference from your score, if score goes negative you fail",
 			"ts": 20,
 			"mode": "complex"
 		},
@@ -234,34 +235,26 @@ function playStandard(){
 }
 function playComplex(){
 	//TODO: Alter this function for the needs of playComplex
-	var btn, val; //Needs to be set here, on each new run through of the interval (rather than the top of the play() function), in case we're running the interval frequently enough that this code can overlap itself and cause val to change for a new run while still being used for the previous run. That was the cause of a bug I caught in development, where on fast play throughs, clicking buttons often led to wildly different outcomes 
-	t++;
-	btn = document.getElementById("btn" + randomInt(1, 9));
-	val = randomInt(5, 10);
-	if (val > 0){
-		btn.innerHTML = "+" + val;
-		
-		btn.classList.add("green");
-		btn.classList.remove("silver");
-		btn.classList.remove("red");
-		btn.classList.remove("black");
-		btn.onclick = function() {goodBtn(val, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
-		//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
-	} else if (val == -9  || val == -8 ) {
+	//Pop double your current score, mistakes take off difference from your score, if score goes negative you fail
+	var btn, val; //Needs to be set here, on each new run through of the interval - same as playStandard
+	t++; //increment timer
+	btn = document.getElementById("btn" + randomInt(1, 9)); //randomly choose btn to alter
+	correctVal = score * 2;
+	val = randomInt(correctVal - 11, correctVal + 10); //randomly set a value for the button in a range around the correct value
+	if (val == correctVal - 11) { //
 		btn.innerHTML = "FAIL";
 		btn.classList.add("black");
 		btn.classList.remove("silver");
-		btn.classList.remove("green");
-		btn.classList.remove("red");
+		btn.classList.remove("blue");
+
 		btn.onclick = function() {failBtn();} 
 	} else {
 		btn.innerHTML = "" + val;
 		
-		btn.classList.add("red");
+		btn.classList.add("blue");
 		btn.classList.remove("silver");
-		btn.classList.remove("green");
 		btn.classList.remove("black");
-		btn.onclick = function() {badBtn(val, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
+		btn.onclick = function() {dblBtn(val, this);} //Multiple notes on this line, just like for playStandard equivalent line: a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = dblBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
 		//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
 	}
 }
@@ -347,6 +340,7 @@ function resetBoard(){
 	let i;
 	var btn;
 	document.getElementById("CS").innerHTML = "0";
+	score = 0;
 	for (i = 1; i < 10; i++){
 		//alert(i + ""); //sanity check
 		btn = document.getElementById("btn" + i);
@@ -387,7 +381,8 @@ function goodBtn(n, btn){
 		//btn is the button - this function is called indirectly via an anonymous function, so using the "this" keyword in this function wouldn't get the button but we can use "this" in the anonymous function and pass it down
 		let cs = document.getElementById("CS");
 		let ts = document.getElementById("TS");
-		cs.innerHTML = (parseInt(cs.innerHTML) + n) + ""; //innerHTML is a string, but we want to do integer addition to it, so this takes the innerHTML as a string, converts it to integer, adds n, then converts that result back to a string via string concatenation with an empty string, and finally sets it back into the innerHTML
+		score = parseInt(cs.innerHTML) + n;
+		cs.innerHTML = score + ""; //innerHTML is a string, but we want to do integer addition to it, so this takes the innerHTML as a string, converts it to integer, adds n, then converts that result back to a string via string concatenation with an empty string, and finally sets it back into the innerHTML
 
 		btn.classList.remove("green");
 		btn.classList.add("silver");
@@ -404,7 +399,8 @@ function goodBtn(n, btn){
 function badBtn(n, btn){
 	if (gameState == "running") {
 		let cs = document.getElementById("CS");
-		cs.innerHTML = (parseInt(cs.innerHTML) + n) + "";
+		score = (parseInt(cs.innerHTML) + n);
+		cs.innerHTML = score + "";
 		btn.classList.remove("red");
 		btn.classList.add("silver");
 		btn.innerHTML = "0";
@@ -428,6 +424,33 @@ function failBtn(){
 		document.getElementById("startBtn").innerHTML = "reset the board";
 		playSound('Sounds/Faaailuuuuure.mp3');
 	}
+}
+
+function dblBtn(n, btn){
+	if (gameState == "running") {
+		//n is the integer that was on the button the user clicked
+		//btn is the button - this function is called indirectly via an anonymous function, so using the "this" keyword in this function wouldn't get the button but we can use "this" in the anonymous function and pass it down
+		let cs = document.getElementById("CS");
+		let ts = document.getElementById("TS");
+		let target = score * 2;
+		if (n == target){
+			score = n;
+		} else {
+			score = Math.abs(target - n); //Math.abs gets the absolute value, the value without positive or negative, so Math.abs(-3) would make 3
+		}
+		cs.innerHTML = score + ""; //innerHTML is a string, but we want to do integer addition to it, so this takes the innerHTML as a string, converts it to integer, adds n, then converts that result back to a string via string concatenation with an empty string, and finally sets it back into the innerHTML
+
+		btn.classList.remove("blue");
+		btn.classList.add("silver");
+		btn.innerHTML = "0";
+		if(!isComplete){
+			if(parseInt(cs.innerHTML) >= parseInt(ts.innerHTML)){
+				reachTarget();
+			}
+		}
+		btn.onclick = function() {}
+	}
+	
 }
 
 /*by "via class" we mean by removing or adding a class called "hidden" that sets css display to none
