@@ -28,22 +28,22 @@ var globals = {
 			"ts": 60,
 			"mode": "standard"
 		},
-		4: { /*complex mode not coded yet*/
+		4: { 
 			"f": 700,
 			"txt": "Complex Slow: if blue button shows score × 2 then score is doubled, otherwise lose the difference",
 			"ts": 20,
 			"mode": "complex"
 		},
-		5: {/*complex mode not coded yet*/
-			"f": 550,
-			"txt": "Complex Faster: A bit faster and a higher target",
-			"ts": 40,
+		5: {
+			"f": 500,
+			"txt": "Complex Faster: A bit faster and a much higher target",
+			"ts": 4080,
 			"mode": "complex"
 		},
-		6: {/*complex mode not coded yet*/
+		6: {
 			"f": 150,
 			"txt": "Complex Crazy: Crazy fast and an even higher target",
-			"ts": 60,
+			"ts": 9999,
 			"mode": "complex"
 		},
 		7: { /*devious mode not coded yet*/
