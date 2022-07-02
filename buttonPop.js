@@ -30,7 +30,7 @@ var globals = {
 		},
 		4: { /*complex mode not coded yet*/
 			"f": 700,
-			"txt": "Complex Slow: Pop double your current score, mistakes take off difference from your score, if score goes negative you fail",
+			"txt": "Complex Slow: if blue button shows score × 2 then score is doubled, otherwise lose the difference",
 			"ts": 20,
 			"mode": "complex"
 		},
@@ -240,18 +240,40 @@ function playComplex(){
 	t++; //increment timer
 	btn = document.getElementById("btn" + randomInt(1, 9)); //randomly choose btn to alter
 	correctVal = score * 2;
-	val = randomInt(correctVal - 11, correctVal + 10); //randomly set a value for the button in a range around the correct value
-	if (val == correctVal - 11) { //
+	val = randomInt(correctVal - 32, correctVal + 10); //randomly set a value for the button in a range around the correct value
+	console.log("val:" + val)
+		console.log("score:" + score)
+	if (val == correctVal - 32) { //
 		btn.innerHTML = "FAIL";
 		btn.classList.add("black");
+		btn.classList.remove("green");
 		btn.classList.remove("silver");
 		btn.classList.remove("blue");
 
 		btn.onclick = function() {failBtn();} 
+	} else if (val <= correctVal - 20) {
+		btn.innerHTML = "+1";
+		btn.classList.add("green");
+		
+		btn.classList.remove("black");
+		btn.classList.remove("silver");
+		btn.classList.remove("blue");
+		btn.onclick = function() {goodBtn(1, this);}
+		
+	} else if (val <= correctVal - 10) { //this block to give more likelihood of doubles showing
+		btn.innerHTML = correctVal;
+		btn.classList.add("blue");
+		
+		btn.classList.remove("black");
+		btn.classList.remove("silver");
+		btn.classList.remove("green");
+		btn.onclick = function() {dblBtn(correctVal, this);}
+		
 	} else {
 		btn.innerHTML = "" + val;
 		
 		btn.classList.add("blue");
+		btn.classList.remove("green");
 		btn.classList.remove("silver");
 		btn.classList.remove("black");
 		btn.onclick = function() {dblBtn(val, this);} //Multiple notes on this line, just like for playStandard equivalent line: a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = dblBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
@@ -436,7 +458,7 @@ function dblBtn(n, btn){
 		if (n == target){
 			score = n;
 		} else {
-			score = Math.abs(target - n); //Math.abs gets the absolute value, the value without positive or negative, so Math.abs(-3) would make 3
+			score = score - Math.abs(target - n); //Math.abs gets the absolute value, the value without positive or negative, so Math.abs(-3) would make 3
 		}
 		cs.innerHTML = score + ""; //innerHTML is a string, but we want to do integer addition to it, so this takes the innerHTML as a string, converts it to integer, adds n, then converts that result back to a string via string concatenation with an empty string, and finally sets it back into the innerHTML
 
