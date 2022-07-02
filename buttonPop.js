@@ -6,6 +6,7 @@ var isComplete = false;
 var gameModes = ["standard", "complex", "devious"]; //all of the game modes
 var gameMode = "standard";//the current game mode
 var score = 0;
+const popSounds = ["Pop1.mp3", "Pop2.mp3", "Pop1.mp3", "Snap1.mp3", "Pop2.mp3", "Snap2.mp3", "Pop1.mp3", "Pop2.mp3", "Pop1.mp3", "Snap3.mp3","Pop1.mp3", "Pop2.mp3", "Eee.mp3"]; //The sound files to play in order
 
 var globals = {
 	"lvlNames": ["Standard Slow","Standard Faster","Standard Crazy","Complex Slow","Complex Faster","Complex Crazy","Devious Slow","Devious Faster","Devious Crazy"],
@@ -339,6 +340,7 @@ function reachTarget(){
 	clearInterval(gameTick);
 	isComplete = true;
 	gameState = "targetReached";
+	//playSound('Sounds/success.mp3'); TODO: some kind of success sound!
 	
 	//show backToLvlChoicesBtn
 	showViaClass("backToLvlChoicesBtn");
@@ -405,7 +407,7 @@ function goodBtn(n, btn){
 		let ts = document.getElementById("TS");
 		score = parseInt(cs.innerHTML) + n;
 		cs.innerHTML = score + ""; //innerHTML is a string, but we want to do integer addition to it, so this takes the innerHTML as a string, converts it to integer, adds n, then converts that result back to a string via string concatenation with an empty string, and finally sets it back into the innerHTML
-
+		playSound('Sounds/Pop1.mp3');
 		btn.classList.remove("green");
 		btn.classList.add("silver");
 		btn.innerHTML = "0";
