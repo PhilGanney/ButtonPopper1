@@ -243,7 +243,7 @@ function playComplex(){
 	val = randomInt(correctVal - 32, correctVal + 10); //randomly set a value for the button in a range around the correct value
 	console.log("val:" + val)
 		console.log("score:" + score)
-	if (val == correctVal - 32) { //
+	if (val <= correctVal - 24) { //
 		btn.innerHTML = "FAIL";
 		btn.classList.add("black");
 		btn.classList.remove("green");
@@ -251,7 +251,7 @@ function playComplex(){
 		btn.classList.remove("blue");
 
 		btn.onclick = function() {failBtn();} 
-	} else if (val <= correctVal - 20) {
+	} else if (val <= correctVal - 14) {
 		btn.innerHTML = "+1";
 		btn.classList.add("green");
 		
@@ -260,7 +260,7 @@ function playComplex(){
 		btn.classList.remove("blue");
 		btn.onclick = function() {goodBtn(1, this);}
 		
-	} else if (val <= correctVal - 10) { //this block to give more likelihood of doubles showing
+	} else if (val <= correctVal - 6) { //this block to give more likelihood of doubles showing
 		btn.innerHTML = correctVal;
 		btn.classList.add("blue");
 		
