@@ -7,6 +7,7 @@ var gameModes = ["standard", "complex", "devious"]; //all of the game modes
 var gameMode = "standard";//the current game mode
 var score = 0;
 const popSounds = ["Pop1.mp3", "Pop2.mp3", "Pop1.mp3", "Snap1.mp3", "Pop2.mp3", "Snap2.mp3", "Pop1.mp3", "Pop2.mp3", "Pop1.mp3", "Snap3.mp3","Pop1.mp3", "Pop2.mp3", "Eee.mp3"]; //The sound files to play in order
+const failSounds = ["Faaailuuuuure.mp3", "SadTrombone.mp3", "Faaailuuuuure.mp3", "DisappointedSigh.mp3", "SadTrombone.mp3", "DisappointedSigh.mp3", "Faaailuuuuure.mp3", "SadTrombone.mp3", "Faaailuuuuure.mp3", "DisappointedSigh.mp3","Faaailuuuuure.mp3", "SadTrombone.mp3", "DisappointedSigh.mp3"]; //The sound files to play in order
 
 var globals = {
 	"lvlNames": ["Standard Slow","Standard Faster","Standard Crazy","Complex Slow","Complex Faster","Complex Crazy","Devious Slow","Devious Faster","Devious Crazy"],
@@ -49,7 +50,7 @@ var globals = {
 		},
 		7: { /*devious mode not coded yet*/
 			"f": 700,
-			"txt": "Devious Slow: (game mode instructions)",
+			"txt": "Devious Slow: If your score ends in an even number then buttons will do the opposite",
 			"ts": 20,
 			"mode": "devious"
 		},
