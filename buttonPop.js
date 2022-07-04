@@ -462,6 +462,7 @@ function dblBtn(n, btn){
 		let target = score * 2;
 		if (n == target){
 			score = n;
+			playNextPop();
 		} else {
 			score = score - Math.abs(target - n); //Math.abs gets the absolute value, the value without positive or negative, so Math.abs(-3) would make 3
 		}
