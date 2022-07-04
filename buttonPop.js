@@ -449,7 +449,7 @@ function failBtn(){
 		//show backToLvlChoicesBtn
 		showViaClass("backToLvlChoicesBtn");
 		document.getElementById("startBtn").innerHTML = "reset the board";
-		playSound('Sounds/Faaailuuuuure.mp3');
+		playNextFail();
 	}
 }
 
@@ -503,6 +503,16 @@ function playNextPop() {
 	nextPop++; //increment nextPop so that next time, the next sound will be played
 	if (nextPop >= popSounds.length){ //if we'd be past the end of the array, loop it round to 0
 		nextPop = 0;
+	}
+}
+function playNextFail() {
+	console.log("playNextFail");
+	//same as playNextPop but through the fails
+	var audio = new Audio('Sounds/' + failSounds[nextFail]);
+	audio.play();
+	nextFail++; //increment nextFail so that next time, the next sound will be played
+	if (nextFail >= nextFail.length){ //if we'd be past the end of the array, loop it round to 0
+		nextFail = 0;
 	}
 }
 
