@@ -6,8 +6,10 @@ var isComplete = false;
 var gameModes = ["standard", "complex", "devious"]; //all of the game modes
 var gameMode = "standard";//the current game mode
 var score = 0;
-const popSounds = ["Pop1.mp3", "Pop2.mp3", "Pop1.mp3", "Snap1.mp3", "Pop2.mp3", "Snap2.mp3", "Pop1.mp3", "Pop2.mp3", "Pop1.mp3", "Snap3.mp3","Pop1.mp3", "Pop2.mp3", "Eee.mp3"]; //The sound files to play in order
+const popSounds = ["Pop1.mp3", "Pop2.mp3", "Pop1.mp3", "Snap.mp3", "Pop2.mp3", "Snap2.mp3", "Pop1.mp3", "Pop2.mp3", "Pop1.mp3", "Snap3.mp3","Pop1.mp3", "Pop2.mp3", "Eee.mp3"]; //The sound files to play in order
+var nextPop = 0;//which index of popSounds to play next
 const failSounds = ["Faaailuuuuure.mp3", "SadTrombone.mp3", "Faaailuuuuure.mp3", "DisappointedSigh.mp3", "SadTrombone.mp3", "DisappointedSigh.mp3", "Faaailuuuuure.mp3", "SadTrombone.mp3", "Faaailuuuuure.mp3", "DisappointedSigh.mp3","Faaailuuuuure.mp3", "SadTrombone.mp3", "DisappointedSigh.mp3"]; //The sound files to play in order
+var nextFail = 0;//which index of popSounds to play next
 
 var globals = {
 	"lvlNames": ["Standard Slow","Standard Faster","Standard Crazy","Complex Slow","Complex Faster","Complex Crazy","Devious Slow","Devious Faster","Devious Crazy"],
@@ -38,7 +40,7 @@ var globals = {
 		},
 		5: {
 			"f": 500,
-			"txt": "Complex Faster: A bit faster and a much higher target",
+			"txt": "Complex Faster: A bit faster and a much higher target. -- Seriously, look at that target!  Double Double Double!!",
 			"ts": 4080,
 			"mode": "complex"
 		},
@@ -408,7 +410,7 @@ function goodBtn(n, btn){
 		let ts = document.getElementById("TS");
 		score = parseInt(cs.innerHTML) + n;
 		cs.innerHTML = score + ""; //innerHTML is a string, but we want to do integer addition to it, so this takes the innerHTML as a string, converts it to integer, adds n, then converts that result back to a string via string concatenation with an empty string, and finally sets it back into the innerHTML
-		playSound('Sounds/Pop1.mp3');
+		playNextPop();
 		btn.classList.remove("green");
 		btn.classList.add("silver");
 		btn.innerHTML = "0";
@@ -487,6 +489,21 @@ function showViaClass(id){
 }
 function hideViaClass(id){
 	document.getElementById(id).classList.add("hidden");
+}
+
+function playNextPop() {
+	console.log("playNextPop");
+	/*Globals used:
+		const popSounds = ["soundFile.mp3","soundFile2.mp3" ...]; where each string is the filename of the next sound to be played - with multiple duplicate strings since we're using a small handful of sounds and want them to be psuedo-random, yet influenced by the developer
+		var nextPop = 0; where we keep track of which index in popSounds is next to be played
+	
+	*/
+	var audio = new Audio('Sounds/' + popSounds[nextPop]);
+	audio.play();
+	nextPop++; //increment nextPop so that next time, the next sound will be played
+	if (nextPop >= popSounds.length){ //if we'd be past the end of the array, loop it round to 0
+		nextPop = 0;
+	}
 }
 
 function playSound(href) {
