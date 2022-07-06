@@ -52,7 +52,7 @@ var globals = {
 		},
 		7: { /*devious mode not coded yet*/
 			"f": 700,
-			"txt": "Devious Slow: If your score ends in an even number then buttons will do the opposite",
+			"txt": "Devious Slow: If your score ends in an even number then buttons will do the opposite of what they normally do",
 			"ts": 20,
 			"mode": "devious"
 		},
@@ -522,4 +522,14 @@ function playSound(href) {
 	//Sound files are in /Sounds
 	var audio = new Audio(href);
 	audio.play();
+}
+
+function scoreIsEven(){
+	if (score % 2 == 0){
+		console.log("score is even");
+		return true;
+	} else {
+		console.log("score is odd");
+		return false
+	}
 }
