@@ -52,7 +52,7 @@ var globals = {
 		},
 		7: { /*devious mode not coded yet*/
 			"f": 700,
-			"txt": "Devious Slow: If your score ends in an even number then buttons will do the opposite of what they normally do",
+			"txt": "Devious Slow: If your score is an even number then buttons will do the opposite of what they normally do",
 			"ts": 20,
 			"mode": "devious"
 		},
@@ -238,7 +238,6 @@ function playStandard(){
 	}
 }
 function playComplex(){
-	//TODO: Alter this function for the needs of playComplex
 	//Pop double your current score, mistakes take off difference from your score, if score goes negative you fail
 	var btn, val; //Needs to be set here, on each new run through of the interval - same as playStandard
 	t++; //increment timer
@@ -284,37 +283,74 @@ function playComplex(){
 		//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
 	}
 }
+
+
 function playDevious(){
-	//TODO: Alter this function for the needs of playDevious
-	var btn, val; //Needs to be set here, on each new run through of the interval (rather than the top of the play() function), in case we're running the interval frequently enough that this code can overlap itself and cause val to change for a new run while still being used for the previous run. That was the cause of a bug I caught in development, where on fast play throughs, clicking buttons often led to wildly different outcomes 
-	t++;
-	btn = document.getElementById("btn" + randomInt(1, 9));
-	val = randomInt(10, 40);
-	if (val > 0){
-		btn.innerHTML = "+" + val;
+	/*"If your score is an even number then buttons will do the opposite of what they normally do"
+		So for odd scores:
+			The same button events should end up happening as playComplex and playStandard (though we wont know if the player will have odd or even score at click time, since buttons persist after clicking other buttons)
+				Blue buttons: correct values double current score, mistakes take off difference from  score,
+		For even scores:
+			do the opposite of what they normally do
+				"if blue button shows score × 2 then score is doubled, otherwise lose the difference"
+				Blue buttons: I can see at least two forms of opposite to choose between, either: 
+					a) correct values halve current score, mistakes add difference to  score,
+					or b) mistakes double current score, correct doubles take off difference from  score --- nah
+				Green buttons: take value off of the score
+				Red buttons: add to the score
+				fail buttons: instant win??? if I did that Id want them to be super rare
+		To pick the correct action at click time:
+			we need new btn functions that check if the score is odd or even, and then either do the regular click event, or an opposite event
 		
-		btn.classList.add("green");
-		btn.classList.remove("silver");
-		btn.classList.remove("red");
-		btn.classList.remove("black");
-		btn.onclick = function() {goodBtn(val, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
-		//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
-	} else if (val == -9  || val == -8 ) {
+			if (score % 2 == 0){
+				console.log("score is even");
+				//opposite
+			} else {
+				console.log("score is odd");
+				//regular
+			}
+	*/
+	var btn, val; //Needs to be set here, on each new run through of the interval - same as playStandard
+	t++; //increment timer
+	btn = document.getElementById("btn" + randomInt(1, 9)); //randomly choose btn to alter
+	correctVal = score * 2;
+	val = randomInt(correctVal - 32, correctVal + 10); //randomly set a value for the button in a range around the correct value
+	console.log("val:" + val)
+		console.log("score:" + score)
+	if (val <= correctVal - 24) { //
 		btn.innerHTML = "FAIL";
 		btn.classList.add("black");
+		btn.classList.remove("green");
+		btn.classList.remove("silver");
+		btn.classList.remove("blue");
+
+		btn.onclick = function() {failBtn();} 
+	} else if (val <= correctVal - 14) {
+		btn.innerHTML = "+1";
+		btn.classList.add("green");
+		
+		btn.classList.remove("black");
+		btn.classList.remove("silver");
+		btn.classList.remove("blue");
+		btn.onclick = function() {goodBtn(1, this);}
+		
+	} else if (val <= correctVal - 6) { //this block to give more likelihood of doubles showing
+		btn.innerHTML = correctVal;
+		btn.classList.add("blue");
+		
+		btn.classList.remove("black");
 		btn.classList.remove("silver");
 		btn.classList.remove("green");
-		btn.classList.remove("red");
-		btn.onclick = function() {failBtn();} 
+		btn.onclick = function() {dblBtn(correctVal, this);}
+		
 	} else {
 		btn.innerHTML = "" + val;
 		
-		btn.classList.add("red");
-		btn.classList.remove("silver");
+		btn.classList.add("blue");
 		btn.classList.remove("green");
+		btn.classList.remove("silver");
 		btn.classList.remove("black");
-		btn.onclick = function() {badBtn(val, this);} //Multiple notes on this line a) this uses an anonymous function to call our main function, but we need the main function to know what button is calling it, which it wouldn't be able to get from the "this" keyword, so we pass it here. b) can't put btn.onclick = goodBtn(1); as that would immediatly call the function, thought I could do btn.addEventListener("click", goodBtn, 1); but that doesn't actually work and it seems the only way to get addEventListener to work with a param is to use a polyfiller or an anonymous function anyway, so there's no advantage I can see
-		//document.getElementById("HS").innerHTML =  t; //Temporarily displaying the tick where High Scores will go as a way of proving tick is happening
+		btn.onclick = function() {dblBtn(val, this);} //For code walkthrough, see the note on other play... functions
 	}
 }
 
@@ -522,14 +558,4 @@ function playSound(href) {
 	//Sound files are in /Sounds
 	var audio = new Audio(href);
 	audio.play();
-}
-
-function scoreIsEven(){
-	if (score % 2 == 0){
-		console.log("score is even");
-		return true;
-	} else {
-		console.log("score is odd");
-		return false
-	}
 }
