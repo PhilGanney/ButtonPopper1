@@ -332,16 +332,16 @@ function playDevious(){
 		btn.classList.remove("black");
 		btn.classList.remove("silver");
 		btn.classList.remove("blue");
-		btn.onclick = function() {goodBtn(1, this);}
+		btn.onclick = function() {deviousGoodBtn(1, this);}
 		
-	} else if (val <= correctVal - 6) { //this block to give more likelihood of doubles showing
-		btn.innerHTML = correctVal;
-		btn.classList.add("blue");
-		
-		btn.classList.remove("black");
+	} else if (val <= correctVal - 6) { //todo this is just here for a way to have some deviousBad buttons, but ideally they should have varied values, presumably random but not necessarily 
+		btn.innerHTML = "-3";
+		btn.classList.add("red");
 		btn.classList.remove("silver");
 		btn.classList.remove("green");
-		btn.onclick = function() {dblBtn(correctVal, this);}
+		btn.classList.remove("black");
+		btn.classList.remove("blue");
+		btn.onclick = function() {deviousBadBtn(-3, this);}
 		
 	} else {
 		btn.innerHTML = "" + val;
@@ -515,6 +515,113 @@ function dblBtn(n, btn){
 		btn.onclick = function() {}
 	}
 	
+}
+
+function deviousGoodBtn(n, btn){
+/*"If your score is an even number then buttons will do the opposite of what they normally do"
+	For even scores:
+		Deduct the value on the button from the score
+		(note that we dont switch over the full code blocks for goodBtn and badBtn, because we only do the opposite effect on the scores, wheras those code blocks also do the minimum to reset the button - knowing what classes will to remove
+	
+	For odd scores:
+		The same button events should end up happening as playComplex and playStandard 
+			
+
+*/
+	if (score % 2 == 0){
+		console.log("score is even");
+		//opposite
+		if (gameState == "running") {
+			//n is an integer that we normally add to the score, but in devious: subtract!
+			//btn is the button - this function is called indirectly via an anonymous function, so using the "this" keyword in this function wouldn't get the button but we can use "this" in the anonymous function and pass it down
+			let cs = document.getElementById("CS");
+			let ts = document.getElementById("TS");
+			score = parseInt(cs.innerHTML) - n;
+			cs.innerHTML = score + ""; //innerHTML is a string, but we want to do integer addition to it, so this takes the innerHTML as a string, converts it to integer, adds n, then converts that result back to a string via string concatenation with an empty string, and finally sets it back into the innerHTML
+			playNextPop();
+			btn.classList.remove("green");
+			btn.classList.add("silver");
+			btn.innerHTML = "0";
+			btn.onclick = function() {}
+		}
+		
+	} else {
+		console.log("score is odd");
+		//regular
+		goodBtn(n, btn);
+	}
+}
+function deviousBadBtn(n, btn){
+/*"If your score is an even number then buttons will do the opposite of what they normally do"
+	For even scores:
+		Make the score go up - though warning, there is some maths complexity here because n comes in as a negative number to add onto the score in normal circumstances, so the reverse is to minus that negative number.
+		(note that we dont switch over the full code blocks for goodBtn and badBtn, because we only do the opposite effect on the scores, wheras those code blocks also do the minimum to reset the button - knowing what classes will to remove
+	
+	For odd scores:
+		The same button events should end up happening as playComplex and playStandard 
+			
+
+*/
+	if (score % 2 == 0){
+		console.log("score is even");
+		//opposite
+		if (gameState == "running") {
+			let cs = document.getElementById("CS");
+			score = (parseInt(cs.innerHTML) - n); //n will be a negative number, maths: -- = +
+			cs.innerHTML = score + "";
+			btn.classList.remove("red");
+			btn.classList.add("silver");
+			btn.innerHTML = "0";
+			btn.onclick = function() {}
+		}
+	} else {
+		console.log("score is odd");
+		//regular
+		badBtn(n, btn);
+	}
+}
+function deviousFailBtn(){
+/*"If your score is an even number then buttons will do the opposite of what they normally do"
+	For even scores:
+		instant win???  
+		extra life?
+		do you have to tap it in a within a time limit to not fail? (more complex code)
+			tap it as the next button once shown? (more complex code)
+		TODO: Decide if these buttons should exist, and what they should do
+	
+	For odd scores:
+		The same button events should end up happening as playComplex and playStandard 
+			
+
+*/
+	if (score % 2 == 0){
+		console.log("score is even");
+		//opposite
+	} else {
+		console.log("score is odd");
+		//regular
+	}
+}
+function deviousDblBtn(){
+/*"If your score is an even number then buttons will do the opposite of what they normally do"
+
+	For even scores:
+		
+		
+		
+	for odd scores:
+		The same button events should end up happening as playComplex and playStandard 
+			
+*/
+	if (score % 2 == 0){
+		console.log("score is even");
+		//opposite
+		
+	} else {
+		console.log("score is odd");
+		//regular
+		dblBtn(n, btn);
+	}
 }
 
 /*by "via class" we mean by removing or adding a class called "hidden" that sets css display to none
