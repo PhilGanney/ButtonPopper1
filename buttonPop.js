@@ -50,19 +50,19 @@ var globals = {
 			"ts": 9999,
 			"mode": "complex"
 		},
-		7: { /*devious mode not coded yet*/
+		7: { 
 			"f": 700,
-			"txt": "Devious Slow: If your score is an even number then buttons will do the opposite of what they normally do",
+			"txt": "Devious Slow: If your score is an even number then green & red buttons will do the opposite of what they normally do",
 			"ts": 20,
 			"mode": "devious"
 		},
-		8: { /*devious mode not coded yet*/
+		8: {
 			"f": 550,
 			"txt": "Devious Faster: A bit faster and a higher target",
 			"ts": 40,
 			"mode": "devious"
 		},
-		9: { /*devious mode not coded yet*/
+		9: { 
 			"f": 150,
 			"txt": "Devious Crazy: Crazy fast and an even higher target",
 			"ts": 60,
