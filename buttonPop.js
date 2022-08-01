@@ -6,11 +6,19 @@ var isComplete = false;
 var gameModes = ["standard", "complex", "devious"]; //all of the game modes
 var gameMode = "standard";//the current game mode
 var score = 0;
-const popSounds = ["Pop1.mp3", "Pop2.mp3", "Pop1.mp3", "Snap.mp3", "Pop2.mp3", "Snap2.mp3", "Pop1.mp3", "Pop2.mp3", "Pop1.mp3", "Snap3.mp3","Pop1.mp3", "Pop2.mp3", "Eee.mp3"]; //The sound files to play in order
+const popSounds = ["Pop1.mp3", "Pop2.mp3", "Pop1.mp3", "Snap.mp3", "Pop2.mp3", "Snap2.mp3", "Pop1.mp3", "Pop2.mp3", "Pop1.mp3", "Snap3.mp3","Pop1.mp3", "Pop2.mp3", "Eee.mp3"]; //The sound files to play in order, some sounds play more often than others intentionally, so that players get this nice effect where its mostly two sounds with some other sounds occuring sporadically
 var nextPop = 0;//which index of popSounds to play next
 const failSounds = ["Faaailuuuuure.mp3", "SadTrombone.mp3", "Faaailuuuuure.mp3", "DisappointedSigh.mp3", "SadTrombone.mp3", "DisappointedSigh.mp3", "Faaailuuuuure.mp3", "SadTrombone.mp3", "Faaailuuuuure.mp3", "DisappointedSigh.mp3","Faaailuuuuure.mp3", "SadTrombone.mp3", "DisappointedSigh.mp3"]; //The sound files to play in order
 var nextFail = 0;//which index of popSounds to play next
 
+/* globals is an object to just group up global variables, used wherever it feels right to do so.
+
+globals.lvls[levelNumber].f is what we change f above to when that level is selected
+globals.lvls[levelNumber].txt is the text for the level description screen
+globals.lvls[levelNumber].ts is the target score for that level. Target scores need to be much higher if doubling is fairly easy or if there are other ways of increasing score rapidly available. Playtest to get them right.
+globals.lvls[levelNumber].mode is the gameMode for that level number, 
+
+*/
 var globals = {
 	"lvlNames": ["Standard Slow","Standard Faster","Standard Crazy","Complex Slow","Complex Faster","Complex Crazy","Devious Slow","Devious Faster","Devious Crazy"],
 	"lvls": {
@@ -81,9 +89,9 @@ function showLevelChoices(){
 	It also sets all the game buttons back to showing 0 which we don't need, but it's not problematic
 	*/
 	resetBoard();
-	showViaClass("highRow");
-	showViaClass("midRow");
-	showViaClass("lowRow");
+	showViaClass("highRow"); //shows the html element with id highRow by toggling css classes.
+	showViaClass("midRow");  //shows the html element with id midRow by toggling css classes.
+	showViaClass("lowRow");  //shows the html element with id lowRow by toggling css classes.
 	/*hide all the divs that could have been showing the back to level choices button 
 	GAMEOVER
 	TargetReached
